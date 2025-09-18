@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Ahmad Raffa Hafidzhiansyah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Login & Signup Styles */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.5s ease;
+        }
+
+        .auth-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            transform: translateY(0);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 28px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .auth-switch a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .auth-switch a:hover {
+            color: #764ba2;
+        }
+
+        /* Main Portfolio Styles */
+        .main-container {
+            display: none;
+            animation: fadeIn 1s ease;
+        }
+
+        /* Navbar */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 50px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+
+        nav a:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #667eea;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
+            width: 80%;
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 50px 50px;
+            min-height: 100vh;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Home Section */
+        .home-content {
+            text-align: center;
+            color: white;
+            margin-top: 100px;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .home-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: slideInLeft 1s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .home-content p {
+            font-size: 24px;
+            margin-bottom: 10px;
+            animation: slideInRight 1s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Tasks Section */
+        .upload-area {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-area h2 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .drop-zone {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .drop-zone:hover {
+            background: rgba(102, 126, 234, 0.05);
+            border-color: #764ba2;
+            transform: scale(1.02);
+        }
+
+        .drop-zone.dragover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .file-list {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .file-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-img {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+        }
+
+        .project-info {
+            padding: 25px;
+        }
+
+        .project-info h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .project-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Others Section */
+        .others-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-bar {
+            margin-bottom: 20px;
+        }
+
+        .skill-bar h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .skill-progress {
+            background: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.3) 30%,
+                rgba(255, 255, 255, 0.3) 70%,
+                transparent 70%
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(238, 90, 36, 0.4);
+            z-index: 1000;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 16px;
+                padding: 8px 15px;
+            }
+
+            .section {
+                padding: 80px 20px 50px;
+            }
+
+            .home-content h1 {
+                font-size: 36px;
+            }
+
+            .home-content p {
+                font-size: 18px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Container -->
+    <div class="auth-container" id="loginContainer">
+        <div class="auth-box">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div class="auth-switch">
+                Belum punya akun? <a href="#" onclick="showSignup()">Daftar disini</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Container -->
+    <div class="auth-container" id="signupContainer" style="display: none;">
+        <div class="auth-box">
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <input type="text" id="signupUsername" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signupPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn">Daftar</button>
+            </form>
+            <div class="auth-switch">
+                    Sudah punya akun? <a href="#" onclick="showLogin()">Login disini</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Portfolio Container -->
+    <div class="main-container" id="mainContainer">
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showSection('home')">Data Pribadi</a></li>
+                <li><a href="#" onclick="showSection('tasks')">Tugas</a></li>
+                <li><a href="#" onclick="showSection('projects')">Project</a></li>
+                <li><a href="#" onclick="showSection('others')">Lainnya</a></li>
+            </ul>
+        </nav>
+
+        <!-- Home Section -->
+        <div class="section active" id="home">
+            <div class="home-content">
+                <div class="profile-img">AR</div>
+                <h1>Ahmad Raffa Hafidzhian Syah</h1>
+                <p>Siswa SMKN 20 Jakarta</p>
+                <p>Rekayasa Perangkat Lunak</p>
+                <p>Email: raffa.hafidz@example.com</p>
+                <p>Telepon: 0812-3456-7890</p>
+            </div>
+        </div>
+
+        <!-- Tasks Section -->
+        <div class="section" id="tasks">
+            <div class="upload-area">
+                <h2>Upload Tugas</h2>
+                <div class="drop-zone" id="dropZone">
+                    <p>Drag & drop file disini atau klik untuk memilih</p>
+                    <input type="file" class="file-input" id="fileInput" multiple>
+                </div>
+                <button class="upload-btn" onclick="uploadFiles()">Upload File</button>
+                <div class="file-list" id="fileList"></div>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="section" id="projects">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img">🌐</div>
+                    <div class="project-info">
+                        <h3>Website Sekolah</h3>
+                        <p>Membuat website profil untuk SMKN 20 Jakarta menggunakan HTML, CSS, dan JavaScript dengan desain modern dan responsive.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">📱</div>
+                    <div class="project-info">
+                        <h3>Aplikasi Monitoring Jaringan</h3>
+                        <p>Develop aplikasi untuk monitoring jaringan komputer menggunakan Python dengan tampilan GUI yang user-friendly.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">🎮</div>
+                    <div class="project-info">
+                        <h3>Game Edukasi Jaringan</h3>
+                        <p>Membuat game edukasi tentang topologi jaringan komputer untuk mempermudah pembelajaran siswa RPL.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">🔧</div>
+                    <div class="project-info">
+                        <h3>Router Mikrotik Configuration</h3>
+                        <p>Konfigurasi router mikrotik untuk jaringan LAN dengan fitur DHCP, firewall, dan bandwidth management.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Others Section -->
+        <div class="section" id="others">
+            <div class="others-content">
+                <h2>Keahlian & Kemampuan</h2>
+                <br>
+                <div class="skill-bar">
+                    <h3>Networking (LAN/WAN)</h3>
+                    <div class="skill-progress">
+                        <div class="skill-fill" style="width: 0%" data-width="85%"></div>
+                    </div>
+                </div>
+                <div class="skill-bar">
+                    <h3>HTML & CSS</h3>
+                    <div class="skill-progress">
+                        <div class="skill-fill" style="width: 0%" data-width="80%"></div>
+                    </div>
+                </div>
+                <div class="skill-bar">
+                    <h3>JavaScript</h3>
+                    <div class="skill-progress">
+                        <div class="skill-fill" style="width: 0%" data-width="70%"></div>
+                    </div>
+                </div>
+                <div class="skill-bar">
+                    <h3>Python</h3>
+                    <div class="skill-progress">
+                        <div class="skill-fill" style="width: 0%" data-width="65%"></div>
+                    </div>
+                </div>
+                <div class="skill-bar">
+                    <h3>Mikrotik Configuration</h3>
+                    <div class="skill-progress">
+                        <div class="skill-fill" style="width: 0%" data-width="75%"></div>
+                    </div>
+                </div>
+                <br>
+                <h2>Hobi & Minat</h2>
+                <br>
+                <p>• Membangun jaringan komputer</p>
+                <p>• Programming dan development</p>
+                <p>• Eksperimen dengan teknologi baru</p>
+                <p>• Gaming dan esports</p>
+                <p>• Fotografi dan videografi</p>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Auth Functions
+        function showSignup() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('signupContainer').style.display = 'flex';
+        }
+
+        function showLogin() {
+            document.getElementById('signupContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'flex';
+        }
+
+        // Login Form
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simulate login
+            if (email && password) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                animateSkills();
+            }
+        });
+
+        // Signup Form
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            // Simulate signup
+            if (username && email && password) {
+                alert('Pendaftaran berhasil! Silakan login.');
+                showLogin();
+            }
+        });
+
+        // Logout Function
+        function logout() {
+            if (confirm('Apakah anda yakin ingin logout?')) {
+                document.getElementById('mainContainer').style.display = 'none';
+                document.getElementById('loginContainer').style.display = 'flex';
+                document.getElementById('loginForm').reset();
+            }
+        }
+
+        // Section Navigation
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            if (sectionId === 'others') {
+                setTimeout(animateSkills, 300);
+            }
+        }
+
+        // File Upload Functions
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        let selectedFiles = [];
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            for (let file of files) {
+                selectedFiles.push(file);
+                displayFile(file);
+            }
+        }
+
+        function displayFile(file) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <span>${file.name}</span>
+                <button onclick="removeFile('${file.name}')" style="background: #ff6b6b; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Hapus</button>
+            `;
+            fileList.appendChild(fileItem);
+        }
+
+        function removeFile(fileName) {
+            selectedFiles = selectedFiles.filter(file => file.name !== fileName);
+            updateFileList();
+        }
+
+        function updateFileList() {
+            fileList.innerHTML = '';
+            selectedFiles.forEach(file => displayFile(file));
+        }
+
+        function uploadFiles() {
+            if (selectedFiles.length === 0) {
+                alert('Pilih file terlebih dahulu!');
+                return;
+            }
+            
+            // Simulate upload
+            const uploadBtn = document.querySelector('.upload-btn');
+            uploadBtn.textContent = 'Mengupload...';
+            uploadBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert(`Berhasil upload ${selectedFiles.length} file!`);
+                selectedFiles = [];
+                fileList.innerHTML = '';
+                uploadBtn.textContent = 'Upload File';
+                uploadBtn.disabled = false;
+            }, 2000);
+        }
+
+        // Animate Skills
+        function animateSkills() {
+            const skillFills = document.querySelectorAll('.skill-fill');
+            skillFills.forEach(fill => {
+                const targetWidth = fill.getAttribute('data-width');
+                setTimeout(() => {
+                    fill.style.width = targetWidth;
+                }, 200);
+            });
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add mouse trail effect
+            let mouseTrail = [];
+            document.addEventListener('mousemove', (e) => {
+                mouseTrail.push({x: e.clientX, y: e.clientY});
+                if (mouseTrail.length > 10) {
+                    mouseTrail.shift();
+                }
+            });
+
+            // Add click ripple effect
+            document.addEventListener('click', (e) => {
+                const ripple = document.createElement('div');
+                ripple.style.position = 'fixed';
+                ripple.style.left = e.clientX + 'px';
+                ripple.style.top = e.clientY + 'px';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                ripple.style.pointerEvents = 'none';
+                document.body.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+
+            // Add ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        width: 100px;
+                        height: 100px;
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
